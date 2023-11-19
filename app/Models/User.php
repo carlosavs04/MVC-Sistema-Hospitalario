@@ -19,7 +19,15 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
+        'gender',
+        'birth_date',
         'email',
+        'phone_number',
+        'role_id',
+        'insurance_id',
+        'insurance_plan',
+        'specialty_id',
         'password',
     ];
 
@@ -42,4 +50,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function insurance()
+    {
+        return $this->belongsTo(Insurance::class);
+    }
+
+    public function specialty()
+    {
+        return $this->belongsTo(Specialty::class);
+    }
 }

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 60);
             $table->string('last_name', 60);
+            $table->string('gender', 1);
+            $table->date('birth_date');
             $table->string('email', 100)->unique();
             $table->string('phone_number', 10);
             $table->timestamp('email_verified_at')->nullable();
@@ -27,6 +29,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('insurance_id')->references('id')->on('insurances');
+            $table->foreign('specialty_id')->references('id')->on('specialties');
         });
     }
 

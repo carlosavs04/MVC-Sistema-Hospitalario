@@ -11,6 +11,10 @@ class Insurance extends Model
 
     protected $table = 'insurances';
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function users()
     {
         return $this->hasMany(User::class);
