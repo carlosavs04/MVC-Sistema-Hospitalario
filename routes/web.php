@@ -23,7 +23,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(function (){
+Route::group([], function () {
     Route::get('/home', [HomeController::class, 'index']);
     Route::get('/signUp', [AuthController::class, 'signUp']);
     Route::post('/register', [AuthController::class, 'register']);

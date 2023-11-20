@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'name' => 'Luis Ángel',
             'last_name' => 'Zapata Zuñiga',
             'gender' => 'M',
-            'birth_date' => '2002-09-04',
+            'birth_date' => '2003-08-15',
             'email' => 'luiszapata0815@gmail.com',
             'phone_number' => '8713530073',
             'role_id' => 3,
