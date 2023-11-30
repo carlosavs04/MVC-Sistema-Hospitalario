@@ -29,8 +29,20 @@
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <h1 class="text-gray-300 px-3 py-2" style="font-size:large;">Bienvenido</h1>
                             <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Agendar Cita</a>
-                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Ver aseguradoras</a>
-                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Ver doctores</a>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <!-- Profile dropdown -->
+                    <div class="relative ml-3 ">
+                        <div class="dropdown">
+                            <button class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium bg-gray-900" style="color: white;"><span class="material-symbols-outlined" style="margin: auto;">
+
+                                </span>Mas opciones</button>
+                            <div class="dropdown-content">
+                                <a href="#">Ver aseguradores</a>
+                                <a href="#">ver doctores</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                         </div>
                     </div>
                 </div>
