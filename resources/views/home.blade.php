@@ -54,7 +54,7 @@
                                     menu
                                 </span></button>
                             <div class="dropdown-content">
-                                <a href="#">Mi perfil</a>
+                                <a href="/profile">Mi perfil</a>
                                 <a href="#">Cerrar sesión</a>
                             </div>
                         </div>
@@ -115,6 +115,7 @@
     </button>
 </div>
 <!--Texto de hospital-->
+<div style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
 <h1 style="font-size: 400%;">Bienvenido al hospital UTT</h1>
   <p>Los hospitales desempeñan un papel crucial en nuestras comunidades al proporcionar atención médica y servicios de salud esenciales. Estos centros de salud son fundamentales para mantener y mejorar la calidad de vida de las personas.</p>
 
@@ -129,6 +130,7 @@
   <p>Es esencial reconocer la <span class="highlight">importancia de la infraestructura hospitalaria</span> para garantizar que las comunidades tengan acceso a atención médica de calidad. Además, los profesionales de la salud que trabajan en los hospitales desempeñan un papel vital en el cuidado y tratamiento de pacientes.</p>
 
   <p>La continua inversión en la mejora de los hospitales y el apoyo a los profesionales de la salud son aspectos clave para fortalecer los sistemas de atención médica y promover el bienestar general de la sociedad.</p>
+</div>
 </body>
 
 </html>
