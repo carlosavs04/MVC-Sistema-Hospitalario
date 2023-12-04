@@ -24,10 +24,10 @@ Route::get('/', function () {
 });
 
 Route::group([], function () {
-    Route::get('/home', [HomeController::class, 'index']);
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/signUp', [AuthController::class, 'signUp']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::get('/signIn', [AuthController::class, 'signIn']);
+    Route::get('/signIn', [AuthController::class, 'signIn'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [UserController::class, 'getUserData']);

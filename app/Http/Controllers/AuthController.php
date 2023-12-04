@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function signUp() 
+    public function signUp()
     {
         return view('signUp');
     }
 
-    public function register(Request $request) 
+    public function register(Request $request)
     {
         $validate = Validator::make($request->all(),
         [
@@ -52,10 +52,24 @@ class AuthController extends Controller
             'password.max' => 'El campo :attribute puede contener un máximo de :max caracteres',
         ]);
 
-        if ($validate->fails()) 
+        if ($validate->fails())
         {
             $errors = $validate->errors();
             return back()->withErrors($errors);
+        }
+
+        $password = $request->password;
+        $passwordConfirmation = $request->password_confirmation;
+
+        if($password != $passwordConfirmation)
+        {
+            return back()->with(
+                [
+                    'status' => 'error',
+                    'message' => 'Las contraseñas no coinciden',
+                    'data' => []
+                ]
+            );
         }
 
         $user = User::create([
@@ -69,7 +83,7 @@ class AuthController extends Controller
             'role_id' => 1
         ]);
 
-        if($user->save()) 
+        if($user->save())
         {
             return redirect()->route('login')->with(
                 [
@@ -81,12 +95,12 @@ class AuthController extends Controller
         }
     }
 
-    public function signIn() 
+    public function signIn()
     {
         return view('signIn');
     }
 
-    public function login(Request $request) 
+    public function login(Request $request)
     {
         $validate = Validator::make($request->all(),
         [
@@ -104,7 +118,7 @@ class AuthController extends Controller
             'password.max' => 'El campo :attribute puede contener un máximo de :max caracteres',
         ]);
 
-        if ($validate->fails()) 
+        if ($validate->fails())
         {
             $errors = $validate->errors();
             return back()->withErrors($errors);
@@ -112,7 +126,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if(!$user || !Hash::check($request->password, $user->password)) 
+        if(!$user || !Hash::check($request->password, $user->password))
         {
             return back()->with(
                 [
@@ -137,7 +151,7 @@ class AuthController extends Controller
 
     public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
-        
+
         return redirect()->route('login')->with(
             [
                 'status' => 'success',

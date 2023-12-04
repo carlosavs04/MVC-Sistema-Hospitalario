@@ -12,8 +12,12 @@
         <div class="">
             <h1 class="text-center text-3xl mb-8">Iniciar Sesión</h1>
             <div class="mx-40">
-                <form method="POST">
+                <form action="/login" method="POST">
                     @csrf
+                    @method('POST')
+                    @error('email' || 'password')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
                     <div class="flex flex-col">
                         <label for="email">Correo</label>
                         <input type="email" name="email" id="email" placeholder="Correo" class="form-input">
