@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Insurance;
+use App\Models\Specialty;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -9,19 +11,48 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function profile()
+    {
+        return view('profile');
+    }
+
     public function getUserData()
     {
-        return view('profile', ['user' => User::find(auth()->user()->id)]);
-        // return view('profile');
+        $user = User::find(auth()->user()->id);
+
+        if ($user->specialty_id == null) {
+            $specialty = null;
+        } else {
+            $specialty = Specialty::find($user->specialty_id)->name;
+        }
+
+        if ($user->insurance_id == null) {
+            $insurance = null;
+        } else {
+            $insurance = Insurance::find($user->insurance_id)->name;
+        }
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'last_name' => $user->last_name,
+            'gender' => $user->gender,
+            'birth_date' => $user->birth_date,
+            'email' => $user->email,
+            'phone_number' => $user->phone_number,
+            'specialty' => $specialty,
+            'insurance' => $insurance,
+            'insurance_plan' => $user->insurance_plan,
+            'role' => $user->role_id,
+        ]);
     }
 
     public function edit()
     {
-        return view('editUser', ['user' => User::find(auth()->user()->id)]);
-        // return view('editUser');
+        return view('editUser');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, int $userId)
     {
         $validate = Validator::make(
             $request->all(),
@@ -30,7 +61,7 @@ class UserController extends Controller
                 'last_name' => 'required|string|max:60',
                 'gender' => 'required|string|max:1',
                 'birth_date' => 'required|date',
-                'email' => 'required|string|email:rfs,dns|max:100|unique:users',
+                'email' => 'required|string|email:rfs,dns|max:100',
                 'phone_number' => 'required|string|max:10'
             ],
             [
@@ -49,7 +80,6 @@ class UserController extends Controller
                 'email.string' => 'El campo :attribute debe ser una cadena de caracteres',
                 'email.email' => 'El campo :attribute debe ser un correo electrónico válido',
                 'email.max' => 'El campo :attribute puede contener un máximo de :max caracteres',
-                'email.unique' => 'El campo :attribute ya se encuentra en uso',
                 'phone_number.required' => 'El campo :attribute es obligatorio',
                 'phone_number.string' => 'El campo :attribute debe ser una cadena de caracteres',
                 'phone_number.max' => 'El campo :attribute puede contener un máximo de :max caracteres'
@@ -61,7 +91,7 @@ class UserController extends Controller
             return back()->withErrors($errors);
         }
 
-        $user = User::find(auth()->user()->id);
+        $user = User::find($userId);
 
         $user->name = $request->name;
         $user->last_name = $request->last_name;
@@ -69,16 +99,15 @@ class UserController extends Controller
         $user->birth_date = $request->birth_date;
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
+        $user->save();
 
-        if ($user->save()) {
-            return redirect()->route('profile')->with(
-                [
-                    'status' => 'success',
-                    'message' => 'Datos actualizados correctamente',
-                    'data' => $user
-                ]
-            );
-        }
+        return redirect()->route('profile')->with(
+            [
+                'status' => 'success',
+                'message' => 'Datos actualizados correctamente',
+                'data' => $user
+            ]
+        );
     }
 
     public function editPassword()
