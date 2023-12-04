@@ -35,5 +35,16 @@ class UserSeeder extends Seeder
             'role_id' => 3,
             'password' => Hash::make('ilovedocker')
         ]);
+
+        User::created([
+            'name' => 'Abelardo',
+            'last_name' => 'García Reyes',
+            'gender' => 'M',
+            'birth_date' => '2003-10-28',
+            'email' => 'abelardo@gmail.com',
+            'phone_number' => '8713530041',
+            'role_id' => 3,
+            'password' => Hash::make('iloveagular')
+        ]);
     }
 }

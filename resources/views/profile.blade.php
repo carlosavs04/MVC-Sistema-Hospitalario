@@ -23,8 +23,8 @@
         <!-- User Information -->
         <div class="mb-4">
             <h1 class="text-2xl font-bold mb-2">Perfil</h1>
-            <div>
-                <img class="rounded-full w-16 h-16 mr-4" src="{{ asset('img/broly.jpg') }}" alt="Flor_Broly">
+            <div class="row">
+                <div class="col-6">
                 <p><strong>Nombre:</strong> <span id="user_name"></span></p>
                 <p><strong>Apellidos:</strong> <span id="user_lastname"></span></p>
                 <p><strong>Género:</strong> <span id="user_gender"></span><p>
@@ -34,14 +34,20 @@
                 <p id="insurance-patient"><strong>Aseguradora:</strong> <span id="user_insurance"></span></p>
                 <p id="insurance-plan"><strong>Plan de seguro:</strong> <span id="user_plan"></span></p>
                 <p id="doctor-specialty"><strong>Especialidad:</strong> <span id="user_specialty"></span></p>
+                </div>
+                <div class="col-6">
+                <img class="rounded-full w-30 h-30 mr-4" src="{{ asset('img/broly.jpg') }}" alt="Flor_Broly">
+
+                </div>
+
             </div>
         </div>
 
         <!-- Edit Profile Button -->
-        <div class="text-right">
-            <a href="editUser/" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+        <div class="text-right row">
+<div class="col-3">            <a href="editUser/" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
                 Editar perfil
-            </a>
+            </a></div>
         </div>
 
     </div>
