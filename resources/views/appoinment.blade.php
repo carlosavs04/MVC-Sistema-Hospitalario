@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     @vite(['resources/css/app.css','resources/js/app.js'])
     @vite('resources/css/carrusel.css')
-    <title>Hospital - Inicio</title>
+    <title>Agendar cita</title>
 </head>
 
 <body class="bg-sky-200">
@@ -21,11 +21,11 @@
     <div class="container mx-auto mt-2">
         <div class="max-w-md mx-auto">
             <div class="bg-white p-6 rounded-md shadow-md ma">
-                <h2 class="text-2xl font-semibold mb-6">Agendar Cita</h2>
+                <h2 class="text-2xl font-semibold mb-6">Agendar cita</h2>
 
-                <form method="POST" action="">
+                <form method="POST" action="" id="appointmentForm">
                     @csrf
-
+                    @method('POST')
                     <div class="mb-2">
                         <label for="date" class="block text-sm font-medium text-gray-600">Fecha</label>
                         <input type="date" name="date" id="date" class="mt-1 p-2 w-full border rounded-md">
@@ -36,25 +36,19 @@
                         <input type="time" name="time" id="time" class="mt-1 p-2 w-full border rounded-md">
                     </div>
                     <div class="mb-2">
-                        <label for="area" class="block text-sm font-medium text-gray-600">Área</label>
-                        <select name="area" id="area" class="mt-1 p-2 w-full border rounded-md">
-                            <option value="doctor1">Área 1</option>
-                            <option value="doctor2">Área 2</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
                         <label for="doctor" class="block text-sm font-medium text-gray-600">Médico</label>
-                        <select name="doctor" id="doctor" class="mt-1 p-2 w-full border rounded-md">
-                            <option value="doctor1">Doctor 1</option>
-                            <option value="doctor2">Doctor 2</option>
+                        <select name="doctor_id" id="doctor_id" class="mt-1 p-2 w-full border rounded-md">
+                            <option selected disabled>Selecciona un médico</option>
+                            @foreach ($doctors as $doctor)
+                                <option value="{{ $doctor->id }}">{{ $doctor->name }} {{ $doctor->last_name }}</option>
+                            @endforeach
                         </select>
                     </div>
 
                     <div class="mb-2">
                         <label for="motivo" class="block text-sm font-medium text-gray-600">Motivo</label>
-                        <textarea name="motivo" id="motivo" class="mt-1 p-2 w-full border rounded-md" rows="2"></textarea>
+                        <textarea name="reason" id="reason" class="mt-1 p-2 w-full border rounded-md" rows="2"></textarea>
                     </div>
-
                     <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Guardar Cita</button>
                 </form>
             </div>
@@ -65,3 +59,42 @@
 </html>
 <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var token = localStorage.getItem('auth_token');
+    var userId = null;
+
+    $(document).ready(function() {
+        $.ajax({
+            url: '/getUserData',
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            success: function(data) {
+                console.log(data);
+                userId = data.id;
+            },
+        })
+
+        $('#appointmentForm').submit(function(event) {
+            event.preventDefault();
+            $(this).attr('action', '/getAppointment/' + userId)
+            $(this).attr('method', 'POST')
+
+            $.ajax({
+                url: '/getAppointment/' + userId,
+                method: 'POST',
+                data: $(this).serialize(),
+            success: function(data) {
+                console.log(data);
+                window.location.href = '/home';
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+    });         
+</script>

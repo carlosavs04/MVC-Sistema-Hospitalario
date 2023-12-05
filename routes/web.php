@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
@@ -58,4 +59,6 @@ Route::group([], function () {
     Route::post('/addInsurance', [InsuranceController::class, 'add']);
     Route::get('/editInsurance/{id}', [InsuranceController::class, 'edit']);
     Route::post('/updateInsurance/{id}', [InsuranceController::class, 'update']);
+    Route::get('/appoinment', [AppointmentController::class, 'create']);
+    Route::post('/getAppointment/{userId}', [AppointmentController::class, 'add']);
 });

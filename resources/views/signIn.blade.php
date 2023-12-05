@@ -10,7 +10,7 @@
 <body class="bg-sky-200">
     <div class="mx-96 mt-10 bg-white rounded-lg shadow-lg py-8">
         <div class="">
-            <h1 class="text-center text-3xl mb-8">Iniciar Sesión</h1>
+            <h1 class="text-center text-3xl mb-8">Iniciar sesión</h1>
             <div class="mx-40">
                 <form action="/login" method="POST" id="loginForm">
                     @csrf
