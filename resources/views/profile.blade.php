@@ -25,18 +25,19 @@
             <h1 class="text-2xl font-bold mb-2">Perfil</h1>
             <div class="row">
                 <div class="col-6">
-                <p><strong>Nombre:</strong> <span id="user_name"></span></p>
-                <p><strong>Apellidos:</strong> <span id="user_lastname"></span></p>
-                <p><strong>Género:</strong> <span id="user_gender"></span><p>
-                <p><strong>Fecha de nacimiento:</strong> <span id="user_birthdate"></span></p>
-                <p><strong>Correo electrónico:</strong> <span id="user_mail"></span></p>
-                <p><strong>Número de teléfono:</strong> <span id="user_phone"></span></p>
-                <p id="insurance-patient"><strong>Aseguradora:</strong> <span id="user_insurance"></span></p>
-                <p id="insurance-plan"><strong>Plan de seguro:</strong> <span id="user_plan"></span></p>
-                <p id="doctor-specialty"><strong>Especialidad:</strong> <span id="user_specialty"></span></p>
+                    <p><strong>Nombre:</strong> <span id="user_name"></span></p>
+                    <p><strong>Apellidos:</strong> <span id="user_lastname"></span></p>
+                    <p><strong>Género:</strong> <span id="user_gender"></span>
+                    <p>
+                    <p><strong>Fecha de nacimiento:</strong> <span id="user_birthdate"></span></p>
+                    <p><strong>Correo electrónico:</strong> <span id="user_mail"></span></p>
+                    <p><strong>Número de teléfono:</strong> <span id="user_phone"></span></p>
+                    <p id="insurance-patient"><strong>Aseguradora:</strong> <span id="user_insurance"></span></p>
+                    <p id="insurance-plan"><strong>Plan de seguro:</strong> <span id="user_plan"></span></p>
+                    <p id="doctor-specialty"><strong>Especialidad:</strong> <span id="user_specialty"></span></p>
                 </div>
                 <div class="col-6">
-                <img class="rounded-full w-30 h-30 mr-4" src="{{ asset('img/broly.jpg') }}" alt="Flor_Broly">
+                    <img class="rounded-full w-30 h-30 mr-4" src="{{ asset('img/broly.jpg') }}" alt="Flor_Broly">
 
                 </div>
 
@@ -45,9 +46,16 @@
 
         <!-- Edit Profile Button -->
         <div class="text-right row">
-<div class="col-3">            <a href="editUser/" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                Editar perfil
-            </a></div>
+            <div class="col-3">
+                <a href="editUser/" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                    Editar perfil
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="editUser/" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                    Mis citas
+                </a>
+            </div>
         </div>
 
     </div>
@@ -66,7 +74,8 @@
             $('#doctor-specialty').hide();
             $('#insurance-patient').show();
             $('#insurance-plan').show();
-        } if (role_id == 2) {
+        }
+        if (role_id == 2) {
             $('#doctor-specialty').show();
             $('#insurance-patient').hide();
             $('#insurance-plan').hide();
@@ -84,25 +93,25 @@
                 'Authorization': 'Bearer ' + token,
             },
             success: function(data) {
-               $('#user_name').html(data.name);
-               $('#user_lastname').html(data.last_name);
-               $('#user_birthdate').html(data.birth_date);
-               $('#user_mail').html(data.email);
-               $('#user_phone').html(data.phone_number);
+                $('#user_name').html(data.name);
+                $('#user_lastname').html(data.last_name);
+                $('#user_birthdate').html(data.birth_date);
+                $('#user_mail').html(data.email);
+                $('#user_phone').html(data.phone_number);
 
-               if(data.gender == 'M') {
+                if (data.gender == 'M') {
                     $('#user_gender').html('Masculino');
-               } else {
+                } else {
                     $('#user_gender').html('Femenino');
-               }
+                }
 
-               if(data.specialty == null) {
+                if (data.specialty == null) {
                     $('#user_specialty').html('');
-               } else {
+                } else {
                     $('#user_specialty').html(data.specialty);
-               }
+                }
 
-                if(data.insurance == null) {
+                if (data.insurance == null) {
                     $('#user_insurance').html('');
                     $('#user_plan').html('');
                 } else {
