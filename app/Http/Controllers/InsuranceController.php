@@ -8,19 +8,19 @@ use Illuminate\Support\Facades\Validator;
 
 class InsuranceController extends Controller
 {
-    public function index() 
+    public function index()
     {
         return view('insurances', ['insurances' => Insurance::all()]);
     }
 
-    public function create() 
+    public function create()
     {
         return view('addInsurance');
     }
 
-    public function add(Request $request) 
+    public function add(Request $request)
     {
-        $validate = Validator::make($request->all(), 
+        $validate = Validator::make($request->all(),
         [
             'name' => 'required|string|max:80'
         ],
@@ -30,7 +30,7 @@ class InsuranceController extends Controller
             'name.max' => 'El campo :attribute debe tener máximo 60 caracteres'
         ]);
 
-        if ($validate->fails()) 
+        if ($validate->fails())
         {
             $errors = $validate->errors();
             return back()->withErrors($errors);
@@ -40,7 +40,7 @@ class InsuranceController extends Controller
             'name' => $request->name
         ]);
 
-        if ($insurance->save()) 
+        if ($insurance->save())
         {
             return redirect()->route('insurances')->with(
             [
@@ -51,19 +51,19 @@ class InsuranceController extends Controller
         }
     }
 
-    public function edit(int $id) 
+    public function edit(int $id)
     {
         $insurance = Insurance::find($id);
 
-        if ($insurance) 
+        if ($insurance)
         {
             return view('editInsurance', ['insurance' => $insurance]);
         }
     }
 
-    public function update(Request $request, int $id) 
+    public function update(Request $request, int $id)
     {
-        $validate = Validator::make($request->all(), 
+        $validate = Validator::make($request->all(),
         [
             'name' => 'required|string|max:80'
         ],
@@ -73,7 +73,7 @@ class InsuranceController extends Controller
             'name.max' => 'El campo :attribute debe tener máximo 60 caracteres'
         ]);
 
-        if ($validate->fails()) 
+        if ($validate->fails())
         {
             $errors = $validate->errors();
             return back()->withErrors($errors);
@@ -81,11 +81,11 @@ class InsuranceController extends Controller
 
         $insurance = Insurance::find($id);
 
-        if ($insurance) 
+        if ($insurance)
         {
             $insurance->name = $request->name;
 
-            if ($insurance->save()) 
+            if ($insurance->save())
             {
                 return redirect()->route('insurances')->with(
                 [
