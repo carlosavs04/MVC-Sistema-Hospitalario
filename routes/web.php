@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
@@ -20,7 +21,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/getUserData', [UserController::class, 'getUserData']);
 });
 
 Route::group([], function () {
@@ -29,10 +35,9 @@ Route::group([], function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/signIn', [AuthController::class, 'signIn'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-    Route::get('/logout', [AuthController::class, 'logout']);
-    Route::get('/profile', [UserController::class, 'getUserData']);
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('/editUser', [UserController::class, 'edit']);
-    Route::post('/updateUser', [UserController::class, 'update']);
+    Route::post('/updateUser/{userId}', [UserController::class, 'update']);
     Route::get('/editPassword', [UserController::class, 'editPassword']);
     Route::post('/updatePassword', [UserController::class, 'updatePassword']);
     Route::get('/patients', [PatientController::class, 'index']);
@@ -54,4 +59,6 @@ Route::group([], function () {
     Route::post('/addInsurance', [InsuranceController::class, 'add']);
     Route::get('/editInsurance/{id}', [InsuranceController::class, 'edit']);
     Route::post('/updateInsurance/{id}', [InsuranceController::class, 'update']);
+    Route::get('/appoinment', [AppointmentController::class, 'create']);
+    Route::post('/getAppointment/{userId}', [AppointmentController::class, 'add']);
 });

@@ -10,17 +10,19 @@
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <h1 class="text-gray-300 px-3 py-2" style="font-size:large;">Bienvenido</h1>
-                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Agendar Cita</a>
+                            <a href="/appoinment" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Agendar Cita</a>
                             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <!-- Profile dropdown -->
-                    <div class="relative ml-3 ">
+                    <div class="relative ml-3 " id="show-admin">
                         <div class="dropdown">
                             <button class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium bg-gray-900" style="color: white;"><span class="material-symbols-outlined" style="margin: auto;">
 
-                                </span>Mas opciones</button>
+                                </span>Ver</button>
                             <div class="dropdown-content">
-                                <a href="#">Ver aseguradores</a>
-                                <a href="#">ver doctores</a>
+                                <a href="#">Ver aseguradoras</a>
+                                <a href="#">Ver citas</a>
+                                <a href="#">Ver doctores</a>
+                                <a href="#">Ver pacientes</a>
                             </div>
                         </div>
                     </div>
@@ -36,8 +38,10 @@
                                     menu
                                 </span></button>
                             <div class="dropdown-content">
-                                <a href="/profile">Mi perfil</a>
-                                <a href="#">Cerrar sesión</a>
+                                <a href="/signIn" id="login-link">Iniciar sesión</a>
+                                <a href="/signUp" id="register-link">Registrarse</a>
+                                <a href="/profile" id="profile-link">Mi perfil</a>
+                                <a href="#" id="logout-link">Cerrar sesión</a>
                             </div>
                         </div>
                     </div>
@@ -46,3 +50,66 @@
         </div>
     </nav>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var isLogged = null, role_id = null, token = null;
+    if (localStorage.getItem('isLogged') == null) {
+        isLogged = false;
+    } else {
+        isLogged = localStorage.getItem('isLogged');
+    }
+
+    if (localStorage.getItem('role_id') == null) {
+        role_id = null;
+    } else {
+        role_id = localStorage.getItem('role_id');
+    }
+
+    if (localStorage.getItem('auth_token') == null) {
+        token = null;
+    } else {
+        token = localStorage.getItem('auth_token');
+    }
+
+    if (isLogged == 'true') {
+        $('#logout-link').show();
+        $('#profile-link').show();
+        $('#login-link').hide();
+        $('#register-link').hide();
+    } else {
+        $('#logout-link').hide();
+        $('#profile-link').hide();
+        $('#login-link').show();
+        $('#register-link').show();
+    }
+
+    if (role_id == 3) {
+        $('#show-admin').show();
+    } else {
+        $('#show-admin').hide();
+    }
+
+    $(document).ready(function() {
+        $('#logout-link').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/logout',
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                },
+                success: function(data) {
+                    localStorage.removeItem('auth_token');
+                    localStorage.removeItem('isLogged');
+                    localStorage.removeItem('role_id');
+                    window.location.href = '/';
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
+

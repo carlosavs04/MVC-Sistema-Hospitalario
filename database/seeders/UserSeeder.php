@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'email' => 'carlos.avalos0409@gmail.com',
             'phone_number' => '8713321257',
             'role_id' => 3,
-            'password' => Hash::make('admin')
+            'password' => Hash::make('admin0409')
         ]);
 
         User::create([
@@ -34,6 +34,17 @@ class UserSeeder extends Seeder
             'phone_number' => '8713530073',
             'role_id' => 3,
             'password' => Hash::make('ilovedocker')
+        ]);
+
+        User::created([
+            'name' => 'Abelardo',
+            'last_name' => 'García Reyes',
+            'gender' => 'M',
+            'birth_date' => '2003-10-28',
+            'email' => 'abelardo@gmail.com',
+            'phone_number' => '8713530041',
+            'role_id' => 3,
+            'password' => Hash::make('iloveagular')
         ]);
     }
 }

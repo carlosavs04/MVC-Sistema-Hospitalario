@@ -138,8 +138,8 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
-
-        return redirect()->route('home')->with(
+        
+        return response()->json(
             [
                 'status' => 'success',
                 'message' => 'Sesión iniciada exitosamente',
