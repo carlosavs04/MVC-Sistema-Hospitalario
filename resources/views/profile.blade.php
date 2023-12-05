@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="col-3">
-                <a href="editUser/" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                <a href="" id="showAppointments" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
                     Mis citas
                 </a>
             </div>
@@ -68,21 +68,25 @@
 <script>
     var token = localStorage.getItem('auth_token');
     var role_id = localStorage.getItem('role_id');
+    var userId = null;
 
     $(document).ready(function() {
         if (role_id == 1) {
             $('#doctor-specialty').hide();
             $('#insurance-patient').show();
             $('#insurance-plan').show();
+            $('#showAppointments').show();
         }
         if (role_id == 2) {
             $('#doctor-specialty').show();
             $('#insurance-patient').hide();
             $('#insurance-plan').hide();
-        } else {
+            $('#showAppointments').show();
+        } else if (role_id == 3) {
             $('#doctor-specialty').hide();
             $('#insurance-patient').hide();
             $('#insurance-plan').hide();
+            $('#showAppointments').hide();
         }
 
         $.ajax({
@@ -98,6 +102,7 @@
                 $('#user_birthdate').html(data.birth_date);
                 $('#user_mail').html(data.email);
                 $('#user_phone').html(data.phone_number);
+                userId = data.id;
 
                 if (data.gender == 'M') {
                     $('#user_gender').html('Masculino');
@@ -112,13 +117,23 @@
                 }
 
                 if (data.insurance == null) {
-                    $('#user_insurance').html('');
-                    $('#user_plan').html('');
+                    $('#user_insurance').html('N/A');
+                    $('#user_plan').html('N/A');
                 } else {
                     $('#user_insurance').html(data.insurance);
                     $('#user_plan').html(data.plan);
                 }
             },
         })
+
+        $('#showAppointments').click(function(e) {
+            e.preventDefault();
+            
+            if (role_id == 1) {
+                window.location.href = '/appointmentsForPatient/' + userId;
+            } else {
+                window.location.href = '/appointmentsForDoctor/' + userId;
+            }
+        });
     });
 </script>

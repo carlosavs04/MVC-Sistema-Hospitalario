@@ -49,9 +49,10 @@
         .then(response => response.json())
         .then(data => {
             if (data.token) {
+                console.log(data)
                 localStorage.setItem('auth_token', data.token);
                 localStorage.setItem('isLogged', true);
-                localStorage.setItem('role_id', data.role_id);
+                localStorage.setItem('role_id', data.data.role_id);
                 window.location.href = '/home';
             } else {
                 console.error('No se recibió un token del servidor');

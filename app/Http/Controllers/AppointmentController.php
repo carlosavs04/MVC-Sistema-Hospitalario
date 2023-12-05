@@ -14,8 +14,8 @@ class AppointmentController extends Controller
     {
         $appointments = Appointment::join('users as patients', 'appointments.patient_id', '=', 'patients.id')
             ->join('users as doctors', 'appointments.doctor_id', '=', 'doctors.id')
-            ->join('specialties', 'appointments.area', '=', 'specialties.id')
-            ->select('appointments.*', 'patients.name as patient_name', 'doctors.name as doctor_name', 'doctors.last_name as doctor_lastname', 'specialties.name as area_name')
+            ->join('specialties', 'doctors.specialty_id', '=', 'specialties.id')
+            ->select('appointments.*', 'patients.name as patient_name', 'patients.last_name as patient_lastname', 'doctors.name as doctor_name', 'doctors.last_name as doctor_lastname', 'specialties.name as area')
             ->get();
 
         return view('appointments', ['appointments' => $appointments]);

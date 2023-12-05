@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Insurance;
+use App\Models\Specialty;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -135,10 +136,9 @@ class PatientController extends Controller
         }
     }
 
-    public function appointmentsForPatient() 
+    public function appointmentsForPatient(int $userId) 
     {
-        $user = User::find(auth()->user()->id);
-
+        $user = User::find($userId);
         if ($user) 
         {
             $appointments = Appointment::where('patient_id', $user->id)->get();
@@ -147,9 +147,12 @@ class PatientController extends Controller
             {
                 foreach ($appointments as $appointment) 
                 {
-                    $appointment->doctor = User::find($appointment->doctor_id)->select('name', 'lastname')->first();
+                    $doctor = User::find($appointment->doctor_id);
+                    $appointment->doctor = $doctor->name . ' ' . $doctor->last_name;
+                    $specialty = Specialty::find($doctor->specialty_id);
+                    $appointment->area = $specialty->name;
                 }
-                return view('myAppointments/patient', ['appointments' => $appointments]);
+                return view('appointmentsForPatient', ['appointments' => $appointments]);
             }
         }
     }

@@ -19,10 +19,10 @@
 
                                 </span>Ver</button>
                             <div class="dropdown-content">
-                                <a href="#">Ver aseguradoras</a>
-                                <a href="#">Ver citas</a>
-                                <a href="#">Ver doctores</a>
-                                <a href="#">Ver pacientes</a>
+                                <a href="/insurances">Ver aseguradoras</a>
+                                <a href="/appointments">Ver citas</a>
+                                <a href="/doctors">Ver doctores</a>
+                                <a href="/patients">Ver pacientes</a>
                             </div>
                         </div>
                     </div>

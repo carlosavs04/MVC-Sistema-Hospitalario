@@ -28,12 +28,15 @@
                     @method('POST')
                     <div class="mb-2">
                         <label for="date" class="block text-sm font-medium text-gray-600">Fecha</label>
-                        <input type="date" name="date" id="date" class="mt-1 p-2 w-full border rounded-md">
+                        <input type="date" name="date" id="date" class="mt-1 p-2 w-full border rounded-md" min="{{ date('Y-m-d') }}" value="{{ date('Y-m-d') }}">
                     </div>
 
                     <div class="mb-2">
                         <label for="time" class="block text-sm font-medium text-gray-600">Hora</label>
-                        <input type="time" name="time" id="time" class="mt-1 p-2 w-full border rounded-md">
+                        <input type="time" name="time" id="time" class="mt-1 p-2 w-full border rounded-md"
+                        value="{{ date('H:i', strtotime('+40 minutes')) }}" 
+                        min="7:30" 
+                        max="22:00">
                     </div>
                     <div class="mb-2">
                         <label for="doctor" class="block text-sm font-medium text-gray-600">Médico</label>
@@ -49,7 +52,7 @@
                         <label for="motivo" class="block text-sm font-medium text-gray-600">Motivo</label>
                         <textarea name="reason" id="reason" class="mt-1 p-2 w-full border rounded-md" rows="2"></textarea>
                     </div>
-                    <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Guardar Cita</button>
+                    <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Agendar cita</button>
                 </form>
             </div>
         </div>
@@ -96,5 +99,22 @@
             }
         });
     });
-    });         
+    });       
+    
+    document.getElementById('date').addEventListener('input', function() {
+        var currentDate = new Date().toISOString().split('T')[0];
+        if (this.value < currentDate) {
+            this.value = currentDate;
+            document.getElementById('time').min = new Date().toLocaleTimeString('en-US', { hour12: false });
+        } else {
+            document.getElementById('time').min = '00:00';
+        }
+    });
+
+    document.getElementById('time').addEventListener('input', function() {
+        var currentTime = new Date().toLocaleTimeString('en-US', { hour12: false });
+        if (this.value < currentTime || (this.value >= '22:00' && this.value <= '07:30')) {
+            this.value = currentTime;
+        }
+    });
 </script>

@@ -127,9 +127,9 @@ class DoctorController extends Controller
         }
     }
 
-    public function appoinmentsForDoctor() 
+    public function appoinmentsForDoctor(int $userId) 
     {
-        $user = User::find(auth()->user()->id);
+        $user = User::find($userId);
 
         if ($user) 
         {
@@ -139,9 +139,10 @@ class DoctorController extends Controller
             {
                 foreach ($appointments as $appointment) 
                 {
-                    $appointment->patient = User::find($appointment->patient_id)->select('name', 'lastname')->first();
+                    $patient = User::find($appointment->patient_id);
+                    $appointment->patient = $patient->name . ' ' . $patient->last_name;
                 }
-                return view('myAppoinments/doctor', ['appointments' => $appointments]);
+                return view('appointmentsForDoctor', ['appointments' => $appointments]);
             }
         }
     }

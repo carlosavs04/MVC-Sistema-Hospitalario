@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('time');
             $table->text('reason', 300);
-            $table->string('status')->nullable();
+            $table->string('status')->default('Pendiente');
             $table->unsignedBigInteger('doctor_id');
             $table->timestamps();
 
