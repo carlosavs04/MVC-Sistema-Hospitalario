@@ -34,8 +34,8 @@
                     <div class="mb-2">
                         <label for="time" class="block text-sm font-medium text-gray-600">Hora</label>
                         <input type="time" name="time" id="time" class="mt-1 p-2 w-full border rounded-md"
-                        value="{{ $appointment->time }}" 
-                        min="7:30" 
+                        value="{{ $appointment->time }}"
+                        min="7:30"
                         max="22:00">
                     </div>
                     <div class="mb-2">
@@ -52,7 +52,7 @@
                         <label for="motivo" class="block text-sm font-medium text-gray-600">Motivo</label>
                         <textarea name="reason" id="reason" class="mt-1 p-2 w-full border rounded-md" rows="2">{{ $appointment->reason }}</textarea>
                     </div>
-                    <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Editar cita</button>
+                    <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Guardar cambios</button>
                 </form>
             </div>
         </div>
@@ -64,7 +64,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    var userId = {{ $id }};    
+    var userId = {{ $id }};
     $(document).ready(function() {
         $('#appointmentForm').submit(function(event) {
             event.preventDefault();
@@ -77,15 +77,15 @@
                 data: $(this).serialize(),
             success: function(data) {
                 console.log(data);
-                history.back();
+                window.location.href = '/appointmentsForPatient/' + userId;
             },
             error: function(error) {
                 console.log(error);
             }
         });
     });
-    });       
-    
+    });
+
     document.getElementById('date').addEventListener('input', function() {
         var currentDate = new Date().toISOString().split('T')[0];
         if (this.value < currentDate) {

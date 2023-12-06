@@ -34,8 +34,8 @@
                     <div class="mb-2">
                         <label for="time" class="block text-sm font-medium text-gray-600">Hora</label>
                         <input type="time" name="time" id="time" class="mt-1 p-2 w-full border rounded-md"
-                        value="{{ date('H:i', strtotime('+40 minutes')) }}" 
-                        min="7:30" 
+                        value="{{ date('H:i', strtotime('+40 minutes')) }}"
+                        min="7:30"
                         max="22:00">
                     </div>
                     <div class="mb-2">
@@ -99,8 +99,8 @@
             }
         });
     });
-    });       
-    
+    });
+
     document.getElementById('date').addEventListener('input', function() {
         var currentDate = new Date().toISOString().split('T')[0];
         if (this.value < currentDate) {
