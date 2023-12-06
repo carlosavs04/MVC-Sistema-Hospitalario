@@ -40,14 +40,14 @@ Route::group([], function () {
     Route::post('/updateUser/{userId}', [UserController::class, 'update']);
     Route::get('/editPassword', [UserController::class, 'editPassword']);
     Route::post('/updatePassword', [UserController::class, 'updatePassword']);
-    Route::get('/patients', [PatientController::class, 'index']);
+    Route::get('/patients', [PatientController::class, 'index'])->name('patients');
     Route::get('/assignInsurance/{userId}', [PatientController::class, 'assignInsurance']);
     Route::post('/addInsurance/{userId}', [PatientController::class, 'addInsurance']);
     Route::get('/editInsurance/{userId}', [PatientController::class, 'editInsurance']);
     Route::post('/updateInsurancePlan/{userId}', [PatientController::class, 'updateInsurance']);
     Route::get('/deleteInsurance/{userId}', [PatientController::class, 'deleteInsurance']);
     Route::get('/appointmentsForPatient/{userId}', [PatientController::class, 'appointmentsForPatient']);
-    Route::get('/doctors', [DoctorController::class, 'index']);
+    Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors');
     Route::get('/addDoctor', [DoctorController::class, 'create']);
     Route::post('/addDoctor/{userId}', [DoctorController::class, 'add']);
     Route::get('/editDoctor/{userId}', [DoctorController::class, 'edit']);

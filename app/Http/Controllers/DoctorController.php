@@ -10,24 +10,24 @@ use Illuminate\Support\Facades\Validator;
 
 class DoctorController extends Controller
 {
-    public function index() 
+    public function index()
     {
         $doctors = User::join('specialties', 'users.specialty_id', '=', 'specialties.id')
         ->select('users.*', 'specialties.name as specialty_name')->where('role_id', 2)->get();
 
-        return view('doctors', ['doctors' => $doctors]);
+        return view('doctors', ['doctors' => $doctors, 'specialties' => Specialty::all()]);
     }
 
-    public function create() 
+    public function create()
     {
         $users = User::where('role_id', 1)->get();
 
         return view('addDoctor', ['users' => $users, 'specialties' => Specialty::all()]);
     }
 
-    public function add(Request $request, int $userId) 
+    public function add(Request $request, int $userId)
     {
-        $validate = Validator::make($request->all(), 
+        $validate = Validator::make($request->all(),
         [
             'specialty_id' => 'required|integer'
         ],
@@ -36,7 +36,7 @@ class DoctorController extends Controller
             'specialty_id.integer' => 'El campo :attribute debe ser un número entero'
         ]);
 
-        if ($validate->fails()) 
+        if ($validate->fails())
         {
             $errors = $validate->errors();
             return back()->withErrors($errors);
@@ -44,12 +44,12 @@ class DoctorController extends Controller
 
         $user = User::find($userId);
 
-        if ($user) 
-        {        
+        if ($user)
+        {
             $user->specialty_id = $request->specialty_id;
             $user->role_id = 2;
-            
-            if($user->save()) 
+
+            if($user->save())
             {
                 return redirect()->route('doctors')->with(
                 [
@@ -61,19 +61,19 @@ class DoctorController extends Controller
         }
     }
 
-    public function edit(int $userId) 
+    public function edit(int $userId)
     {
         $user = User::find($userId);
 
-        if ($user) 
+        if ($user)
         {
             return view('editDoctor', ['user' => $user, 'specialties' => Specialty::all()]);
         }
     }
 
-    public function update(Request $request, int $userId) 
+    public function update(Request $request, int $userId)
     {
-        $validate = Validator::make($request->all(), 
+        $validate = Validator::make($request->all(),
         [
             'specialty_id' => 'required|integer'
         ],
@@ -82,7 +82,7 @@ class DoctorController extends Controller
             'specialty_id.integer' => 'El campo :attribute debe ser un número entero'
         ]);
 
-        if ($validate->fails()) 
+        if ($validate->fails())
         {
             $errors = $validate->errors();
             return back()->withErrors($errors);
@@ -90,11 +90,11 @@ class DoctorController extends Controller
 
         $user = User::find($userId);
 
-        if ($user) 
-        {        
+        if ($user)
+        {
             $user->specialty_id = $request->specialty_id;
-            
-            if($user->save()) 
+
+            if($user->save())
             {
                 return redirect()->route('doctors')->with(
                 [
@@ -106,16 +106,16 @@ class DoctorController extends Controller
         }
     }
 
-    public function delete(int $userId) 
+    public function delete(int $userId)
     {
         $user = User::find($userId);
 
-        if ($user) 
+        if ($user)
         {
             $user->specialty_id = null;
             $user->role_id = 1;
-            
-            if($user->save()) 
+
+            if($user->save())
             {
                 return redirect()->route('doctors')->with(
                 [
@@ -127,17 +127,17 @@ class DoctorController extends Controller
         }
     }
 
-    public function appoinmentsForDoctor(int $userId) 
+    public function appoinmentsForDoctor(int $userId)
     {
         $user = User::find($userId);
 
-        if ($user) 
+        if ($user)
         {
             $appointments = Appointment::where('doctor_id', $user->id)->get();
 
-            if ($appointments) 
+            if ($appointments)
             {
-                foreach ($appointments as $appointment) 
+                foreach ($appointments as $appointment)
                 {
                     $patient = User::find($appointment->patient_id);
                     $appointment->patient = $patient->name . ' ' . $patient->last_name;
