@@ -62,4 +62,6 @@ Route::group([], function () {
     Route::get('/appoinment', [AppointmentController::class, 'create']);
     Route::post('/getAppointment/{userId}', [AppointmentController::class, 'add']);
     Route::get('/appointments', [AppointmentController::class, 'index']);
+    Route::get('/editAppointment/{id}', [AppointmentController::class, 'edit']);
+    Route::post('/updateAppointment/{id}', [AppointmentController::class, 'update']);
 });

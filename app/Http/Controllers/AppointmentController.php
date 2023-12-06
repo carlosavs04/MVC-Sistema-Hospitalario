@@ -69,4 +69,52 @@ class AppointmentController extends Controller
             );
         }
     }
+
+    function edit(int $id)
+    {
+        $appointment = Appointment::find($id);
+        $doctorSelected = User::find($appointment->doctor_id);
+        $doctors = User::where('role_id', 2)->where('id', '!=', $doctorSelected->id)->get();
+        return view('editAppointment', ['appointment' => $appointment, 'doctors' => $doctors, 'doctorSelected' => $doctorSelected, 'id' => $id]);
+    }
+
+    function update(Request $request, int $id) 
+    {
+        $validate = Validator::make($request->all(), [
+            'date' => 'required|date',
+            'time' => 'required',
+            'reason' => 'required|string|max:300',
+            'doctor_id' => 'required|integer'
+        ],
+        [
+            'date.required' => 'El campo :attribute es obligatorio',
+            'date.date' => 'El campo :attribute debe ser una fecha',
+            'time.required' => 'El campo :attribute es obligatorio',
+            'reason.required' => 'El campo :attribute es obligatorio',
+            'reason.string' => 'El campo :attribute debe ser una cadena de caracteres',
+            'reason.max' => 'El campo :attribute debe tener máximo 300 caracteres',
+            'doctor_id.required' => 'El campo :attribute es obligatorio',
+            'doctor_id.integer' => 'El campo :attribute debe ser un número entero'
+        ]);
+
+        if ($validate->fails()) {
+            $errors = $validate->errors();
+            return back()->withErrors($errors);
+        }
+
+        $appointment = Appointment::find($id);
+        $appointment->date = $request->date;
+        $appointment->time = $request->time;
+        $appointment->reason = $request->reason;
+        $appointment->doctor_id = $request->doctor_id;
+        $appointment->save();
+
+        return redirect()->back()->with(
+                [
+                    'status' => 'success',
+                    'message' => 'Cita actualizada correctamente',
+                    'data' => $appointment
+                ]
+            );
+    }
 }
