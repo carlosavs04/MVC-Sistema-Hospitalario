@@ -117,4 +117,49 @@ class AppointmentController extends Controller
                 ]
             );
     }
+
+    function changeToDone(int $id)
+    {
+        $appointment = Appointment::find($id);
+        $appointment->status = 'Completada';
+        $appointment->save();
+
+        return redirect()->back()->with(
+                [
+                    'status' => 'success',
+                    'message' => 'Cita actualizada correctamente',
+                    'data' => $appointment
+                ]
+            );
+    }
+
+    function changeToCancel(int $id)
+    {
+        $appointment = Appointment::find($id);
+        $appointment->status = 'Cancelada';
+        $appointment->save();
+
+        return redirect()->back()->with(
+                [
+                    'status' => 'success',
+                    'message' => 'Cita actualizada correctamente',
+                    'data' => $appointment
+                ]
+            );
+    }
+
+    function changeToPending(int $id)
+    {
+        $appointment = Appointment::find($id);
+        $appointment->status = 'Pendiente';
+        $appointment->save();
+
+        return redirect()->back()->with(
+                [
+                    'status' => 'success',
+                    'message' => 'Cita actualizada correctamente',
+                    'data' => $appointment
+                ]
+            );
+    }
 }

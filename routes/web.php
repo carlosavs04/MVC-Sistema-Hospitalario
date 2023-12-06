@@ -64,4 +64,7 @@ Route::group([], function () {
     Route::get('/appointments', [AppointmentController::class, 'index']);
     Route::get('/editAppointment/{id}', [AppointmentController::class, 'edit']);
     Route::post('/updateAppointment/{id}', [AppointmentController::class, 'update']);
+    Route::post('/changeToDone/{id}', [AppointmentController::class, 'changeToDone']);
+    Route::post('/changeToCancel/{id}', [AppointmentController::class, 'changeToCancel']);
+    Route::post('/changeToPending/{id}', [AppointmentController::class, 'changeToPending']);
 });

@@ -11,7 +11,7 @@
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <h1 class="text-gray-300 px-3 py-2" style="font-size:large;">Bienvenido</h1>
-                            <a href="/appoinment" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Agendar Cita</a>
+                            <a href="/appoinment" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" id="getAppointment">Agendar Cita</a>
                             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <!-- Profile dropdown -->
                     <div class="relative ml-3 " id="show-admin">
@@ -77,11 +77,13 @@
         $('#profile-link').show();
         $('#login-link').hide();
         $('#register-link').hide();
+        $('#getAppointment').show();
     } else {
         $('#logout-link').hide();
         $('#profile-link').hide();
         $('#login-link').show();
         $('#register-link').show();
+        $('#getAppointment').hide();
     }
 
     if (role_id == 3) {

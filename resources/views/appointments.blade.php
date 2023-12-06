@@ -51,8 +51,104 @@
                         <td class="border">
                         <a class="bg-blue-500 rounded-sm px-2 text-white" href="{{ url('/editAppointment/' . $appointment->id) }}">
                         <i class="bi bi-pencil-square"></i></a>
+                        @if ($appointment->status != 'Pendiente')
+                        <a class="bg-yellow-300 rounded-sm px-2 text-white" data-bs-target="#pendingModal-{{ $appointment->id }}" data-bs-toggle="modal">
+                        <i class="bi bi-clock-history"></i></a>
+                        @endif
+                        @if ($appointment->status != 'Completada')
+                        <a class="bg-green-500 rounded-sm px-2 text-white" data-bs-target="#doneModal-{{ $appointment->id }}" data-bs-toggle="modal">
+                        <i class="bi bi-check2"></i></a>
+                        @endif
+                        @if ($appointment->status != 'Cancelada')
+                        <a class="bg-red-700 rounded-sm px-2 text-white" data-bs-target="#cancelModal-{{ $appointment->id }}" data-bs-toggle="modal">
+                        <i class="bi bi-x"></i></a>
+                        @endif
                         </td>
                     </tr>
+                    <div class="modal fade" id="pendingModal-{{ $appointment->id }}"
+                        tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <form action="/changeToPending/{{ $appointment->id }}" method="POST">
+                            @method('POST')
+                            @csrf
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Marcar cita como pendiente</h1>
+                                        <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        ¿Estás seguro de que deseas marcar la cita como pendiente?
+                                    </div>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="modal fade" id="doneModal-{{ $appointment->id }}"
+                        tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <form action="/changeToDone/{{ $appointment->id }}" method="POST">
+                            @method('POST')
+                            @csrf
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Marcar cita como completada</h1>
+                                        <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        ¿Estás seguro de que deseas marcar la cita como completada?
+                                    </div>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="modal fade" id="cancelModal-{{ $appointment->id }}"
+                        tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <form action="/changeToCancel/{{ $appointment->id }}" method="POST">
+                            @method('POST')
+                            @csrf
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Marcar cita como cancelada</h1>
+                                        <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        ¿Estás seguro de que deseas marcar la cita como cancelada?
+                                    </div>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
                 @endforeach
             </tbody>
         </table>
