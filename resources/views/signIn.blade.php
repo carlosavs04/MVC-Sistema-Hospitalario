@@ -26,8 +26,8 @@
                         <label for="password">Contraseña</label>
                         <input type="password" name="password" id="password" placeholder="Contraseña" class="form-input">
                     </div>
-                    <div class="flex flex-col mt-6 mx-20">
-                        <button type="submit" class="bg-blue-500 text-white rounded-md">Iniciar sesión</button>
+                    <div class="flex flex-col mt-6" style="width: 103%;">
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Iniciar Sesión</button>
                     </div>
                 </form>
             </div>
