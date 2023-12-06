@@ -40,7 +40,7 @@
                         <th scope="col" class="border px-6 py-3">Hora</th>
                         <th scope="col" class="border px-6 py-3">Estatus</th>
                         <th scope="col" class="border px-6 py-3">Motivo</th>
-                        <th scope="col" lass="border px-6 py-3">Acciones</th>
+                        <th scope="col" class="border px-6 py-3">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>

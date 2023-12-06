@@ -77,7 +77,7 @@
                 data: $(this).serialize(),
             success: function(data) {
                 console.log(data);
-                window.location.href = '/appointmentsForPatient/' + userId;
+                history.back();
             },
             error: function(error) {
                 console.log(error);
