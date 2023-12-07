@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'birth_date' => '2002-09-04',
             'email' => 'carlos.avalos0409@gmail.com',
             'phone_number' => '8713321257',
-            'role_id' => 1,
+            'role_id' => 3,
             'password' => Hash::make('admin0409')
         ]);
 
