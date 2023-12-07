@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,145 +16,135 @@
     <title>Citas</title>
 </head>
 <x-navbar />
+
 <body class="bg-sky-200">
     <h1 class="text-center text-3xl">Citas</h1>
     @if (session('status'))
     <div class="flex justify-center rounded-md">
         <div class="text-center bg-white px-32 shadow-md">
-        {{ session('message') }}
+            {{ session('message') }}
         </div>
     </div>
     @endif
-    <div class="flex justify-center">
-        <table class="table-auto border-collapse border">
-            <thead>
-                <tr class="border border-collapse bg-slate-600 text-white text-center">
-                    <th class="border">Paciente</th>
-                    <th class="border">Doctor</th>
-                    <th class="border">Área</th>
-                    <th class="border">Fecha</th>
-                    <th class="border">Hora</th>
-                    <th class="border">Estatus</th>
-                    <th class="border">Motivo</th>
-                    <th class="border px-2">Acciones</th>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg" style="width:80%; margin:auto;">
+        <table class="w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-white uppercase bg-gray-800 dark:bg-gray-700 dark:text-gray-400">
+                <tr style="text-align: center;">
+                    <th class="border py-3">Paciente</th>
+                    <th class="border py-3">Doctor</th>
+                    <th class="border py-3">Área</th>
+                    <th class="border py-3">Fecha</th>
+                    <th class="border py-3">Hora</th>
+                    <th class="border py-3">Estatus</th>
+                    <th class="border py-3">Motivo</th>
+                    <th class="border py-3">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($appointments as $appointment)
-                    <tr class="border border-collapse bg-white text-center">
-                        <td class="border">{{ $appointment->patient_name }} {{ $appointment->patient_lastname }}</td>
-                        <td class="border">{{ $appointment->doctor_name }} {{ $appointment->doctor_lastname }}</td>
-                        <td class="border">{{ $appointment->area }}</td>
-                        <td class="border">{{ $appointment->date }}</td>
-                        <td class="border">{{ $appointment->time }}</td>
-                        <td class="border">{{ $appointment->status }}</td>
-                        <td class="border">{{ $appointment->reason }}</td>
-                        <td class="border">
+                <tr class="border border-collapse bg-white text-center">
+                    <td class="border px-6 py-2">{{ $appointment->patient_name }} {{ $appointment->patient_lastname }}</td>
+                    <td class="border px-6 py-2">{{ $appointment->doctor_name }} {{ $appointment->doctor_lastname }}</td>
+                    <td class="border px-6 py-2">{{ $appointment->area }}</td>
+                    <td class="border px-6 py-2">{{ $appointment->date }}</td>
+                    <td class="border px-6 py-2">{{ $appointment->time }}</td>
+                    <td class="border px-6 py-2">{{ $appointment->status }}</td>
+                    <td class="border px-6 py-2">{{ $appointment->reason }}</td>
+                    <td class="border px-6 py-2">
                         <a class="bg-blue-500 rounded-sm px-2 text-white" href="{{ url('/editAppointment/' . $appointment->id) }}">
-                        <i class="bi bi-pencil-square"></i></a>
+                            <i class="bi bi-pencil-square"></i></a>
                         @if ($appointment->status != 'Pendiente')
                         <a class="bg-yellow-300 rounded-sm px-2 text-white" data-bs-target="#pendingModal-{{ $appointment->id }}" data-bs-toggle="modal">
-                        <i class="bi bi-clock-history"></i></a>
+                            <i class="bi bi-clock-history"></i></a>
                         @endif
                         @if ($appointment->status != 'Completada')
                         <a class="bg-green-500 rounded-sm px-2 text-white" data-bs-target="#doneModal-{{ $appointment->id }}" data-bs-toggle="modal">
-                        <i class="bi bi-check2"></i></a>
+                            <i class="bi bi-check2"></i></a>
                         @endif
                         @if ($appointment->status != 'Cancelada')
                         <a class="bg-red-700 rounded-sm px-2 text-white" data-bs-target="#cancelModal-{{ $appointment->id }}" data-bs-toggle="modal">
-                        <i class="bi bi-x"></i></a>
+                            <i class="bi bi-x"></i></a>
                         @endif
-                        </td>
-                    </tr>
-                    <div class="modal fade" id="pendingModal-{{ $appointment->id }}"
-                        tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <form action="/changeToPending/{{ $appointment->id }}" method="POST">
-                            @method('POST')
-                            @csrf
+                    </td>
+                </tr>
+                <div class="modal fade" id="pendingModal-{{ $appointment->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form action="/changeToPending/{{ $appointment->id }}" method="POST">
+                        @method('POST')
+                        @csrf
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Marcar cita como pendiente</h1>
-                                        <button type="button" class="btn-close"
-                                            data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                        </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         ¿Estás seguro de que deseas marcar la cita como pendiente?
                                     </div>
                                 </div>
-                            <div class="modal-footer">
-                                <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                                data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Guardar</button>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Guardar</button>
+                                </div>
                             </div>
                         </div>
-                        </form>
-                    </div>
-                    <div class="modal fade" id="doneModal-{{ $appointment->id }}"
-                        tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <form action="/changeToDone/{{ $appointment->id }}" method="POST">
-                            @method('POST')
-                            @csrf
+                    </form>
+                </div>
+                <div class="modal fade" id="doneModal-{{ $appointment->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form action="/changeToDone/{{ $appointment->id }}" method="POST">
+                        @method('POST')
+                        @csrf
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Marcar cita como completada</h1>
-                                        <button type="button" class="btn-close"
-                                            data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                        </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         ¿Estás seguro de que deseas marcar la cita como completada?
                                     </div>
                                 </div>
-                            <div class="modal-footer">
-                                <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                                data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Guardar</button>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Guardar</button>
+                                </div>
                             </div>
                         </div>
-                        </form>
-                    </div>
-                    <div class="modal fade" id="cancelModal-{{ $appointment->id }}"
-                        tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <form action="/changeToCancel/{{ $appointment->id }}" method="POST">
-                            @method('POST')
-                            @csrf
+                    </form>
+                </div>
+                <div class="modal fade" id="cancelModal-{{ $appointment->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form action="/changeToCancel/{{ $appointment->id }}" method="POST">
+                        @method('POST')
+                        @csrf
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Marcar cita como cancelada</h1>
-                                        <button type="button" class="btn-close"
-                                            data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                        </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         ¿Estás seguro de que deseas marcar la cita como cancelada?
                                     </div>
                                 </div>
-                            <div class="modal-footer">
-                                <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                                data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Guardar</button>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Guardar</button>
+                                </div>
                             </div>
                         </div>
-                        </form>
-                    </div>
+                    </form>
+                </div>
                 @endforeach
             </tbody>
         </table>
     </div>
 </body>
+
 </html>
 <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
